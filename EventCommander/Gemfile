@@ -26,7 +26,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'rack-cors'
 
 # API Auth Token
-gem 'devise_token_auth'
+gem 'omniauth', '~> 1.6.1'
+gem 'omniauth-google-oauth2', '~> 0.4.1'
+gem 'devise_token_auth', '~> 0.1.40'
+
+# For secrets
+gem 'figaro', '~> 1.1.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
