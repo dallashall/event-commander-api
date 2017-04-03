@@ -158,7 +158,7 @@ DEPENDENCIES
   figaro (~> 1.1.1)
   jbuilder (~> 2.5)
   omniauth (~> 1.6.1)
-  omniauth-google-oauth2
+  omniauth-google-oauth2 (~> 0.4.1)
   pg (~> 0.18)
   puma (~> 3.0)
   rack-cors
