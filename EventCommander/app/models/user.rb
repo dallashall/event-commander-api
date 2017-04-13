@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   attr_reader :password
   validates :username, :email, presence: true, uniqueness: true
-  valdiates :password_digest, presence: true
+  validates :password_digest, presence: true
   validates :password, length: { minimum: 8, allow_nil: true }
 
   def gen_auth_token
@@ -11,7 +11,7 @@ class User < ApplicationRecord
   end
 
   def invalidate_token
-    self.update_columns(auth_token: token)
+    self.update_columns(auth_token: nil)
   end
 
   def password=(password)
