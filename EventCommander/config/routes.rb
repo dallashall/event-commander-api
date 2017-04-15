@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   end
   resources :users
   post "/sign-in" => "sessions#make"
-  post "/sign-out" => "session#unmake"
+  post "/sign-out" => "sessions#unmake"
 end
