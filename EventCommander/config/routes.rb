@@ -3,6 +3,13 @@ Rails.application.routes.draw do
     resources :users
     post    "/sign-in"  => "sessions#create"
     delete  "/sign-out" => "sessions#destroy"
+    resources :events
+    resources :teams
+    resources :team_members
+    resources :tasks
+    resources :details
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :users
+  post "/sign-in" => "sessions#make"
+  post "/sign-out" => "session#unmake"
 end
