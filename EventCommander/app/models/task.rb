@@ -1,7 +1,7 @@
 # AR Model for task objects
 class Task < ApplicationRecord
   attr_reader :order
-  validates :name, :event, :order
+  validates :name, :event, :order, presence: true
   belongs_to :event
   has_many :details
   has_many :sibling_events, through: :event, source: :tasks
