@@ -1,3 +1,4 @@
+# AR Model for team_member objects
 class CreateTeamMembers < ActiveRecord::Migration[5.0]
   def change
     create_table :team_members do |t|
