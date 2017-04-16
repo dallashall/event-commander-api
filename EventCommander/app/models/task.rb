@@ -1,14 +1,13 @@
 # AR Model for task objects
 class Task < ApplicationRecord
-  attr_reader :order
-  validates :name, :event, :order, presence: true
+  validates :name, :event, presence: true
   belongs_to :event
   has_many :details
-  has_many :sibling_events, through: :event, source: :tasks
+  has_many :sibling_tasks, through: :event, source: :tasks
   before_validation :set_initial_order
 
   def last_ordered_task
-    Event.where(id: this.event_id).order(event_id: :desc).first
+    sibling_tasks.order(order: :desc).first
   end
 
   def reorder(new_order)
@@ -18,11 +17,11 @@ class Task < ApplicationRecord
   private
 
   def set_initial_order
-    self.order ||= last_ordered_task.order + 1
+    self.order = last_ordered_task ? last_ordered_task.order + 1 : 1
   end
 
   def move_up(new_ord)
-    sibling_events
+    sibling_tasks
       .where("order < #{self.order} AND order >= #{new_ord}")
       .each do |event|
       event.update_attributes(order: event.order + 1)
@@ -31,7 +30,7 @@ class Task < ApplicationRecord
   end
 
   def move_down(new_ord)
-    sibling_events
+    sibling_tasks
       .where("order > #{self.order} AND order <= #{new_ord}")
       .each do |event|
       event.update_attributes(order: event.order - 1)
