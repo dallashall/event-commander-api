@@ -51,11 +51,15 @@ ActiveRecord::Schema.define(version: 20170416022940) do
   end
 
   create_table "team_members", force: :cascade do |t|
-    t.string   "email"
-    t.string   "name"
-    t.integer  "team_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "email",            null: false
+    t.string   "name",             null: false
+    t.string   "single_use_token", null: false
+    t.integer  "team_id",          null: false
+    t.string   "auth_token"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["auth_token"], name: "index_team_members_on_auth_token", using: :btree
+    t.index ["single_use_token"], name: "index_team_members_on_single_use_token", using: :btree
   end
 
   create_table "teams", force: :cascade do |t|
