@@ -11,6 +11,7 @@ class Task < ApplicationRecord
   end
 
   def reorder(new_order)
+    return if new_order == self.order
     new_order > order ? move_down(new_order) : move_up(new_order)
   end
 
