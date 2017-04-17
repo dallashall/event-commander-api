@@ -1,3 +1,4 @@
+# AR Model for task objects
 class Api::TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
@@ -25,6 +26,10 @@ class Api::TasksController < ApplicationController
     else
       render json: ["Could not update task"], status: 401
     end
+  end
+
+  def show
+    @task = selected_task
   end
 
   private
