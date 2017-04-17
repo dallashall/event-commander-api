@@ -30,7 +30,9 @@ editorState = {
       id:       1,
       team_id:  1,
       name:     "Jane Doe",
-      email:    "jane@jane.jane"
+      email:    "jane@jane.jane",
+      single_use_token: "someBase64_24_bits",
+      auth_token: "someBase64_32_bits"
     }
   },
   tasks: {
@@ -46,6 +48,12 @@ editorState = {
       id:       1,
       task_id:  1,
       team_id:  1
+    }
+  },
+  detail_assignment: {
+    1: {
+      team_id: 1,
+      detail_id: 1
     }
   }
 }
