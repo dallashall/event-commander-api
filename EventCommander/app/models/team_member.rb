@@ -9,7 +9,7 @@ class TeamMember < ApplicationRecord
   end
 
   def gen_single_use_token
-    self.single_use_token = SecureRandom.urlsafe_base64
+    self.single_use_token ||= SecureRandom.urlsafe_base64(24)
   end
 
   def invite

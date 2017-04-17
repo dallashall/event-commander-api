@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :events
     resources :teams
     resources :team_members
-    post "/team_members/connect/:sut" => "team_members#connect"
+    get "/team_members/connect/:sut" => "team_members#connect"
     resources :tasks
     resources :details
     post "/team_members_sessions" => "team_members_sessions#create"

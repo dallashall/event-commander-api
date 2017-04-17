@@ -32,7 +32,7 @@ class Api::TeamMembersController < ApplicationController
     @team_member = TeamMember.find_by(single_use_token: params[:sut])
     if @team_member
       @team_member.gen_auth_token
-      render json: @team_member.gen_auth_token
+      render json: { token: @team_member.auth_token }
     else
       render json: ["Could not validate user"], status: 401
     end
