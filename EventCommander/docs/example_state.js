@@ -2,6 +2,7 @@ editorState = {
   session: {
     auth_token: "auth string",
     user: {
+      id: 1,
       username: "Users Name",
       email:    "user@user.user"
     }

@@ -1,11 +1,12 @@
+# API methods for session
 class Api::SessionsController < ApplicationController
   before_action :require_login!, except: [:create]
 
   def create
-    user = User.find_by(email: user_params[:email])
+    @user = User.find_by(email: user_params[:email])
     if user && user.is_password?(user_params[:password])
-      auth_token = user.gen_auth_token
-      render json: { auth_token: auth_token }
+      @auth_token = user.gen_auth_token
+      render :create
     else
       invalid_login
     end
