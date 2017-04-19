@@ -3,7 +3,8 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render :show
+      @user.gen_auth_token
+      render 'api/sessions/create'
     else
       render json: @user.errors.full_messages, status: 401
     end

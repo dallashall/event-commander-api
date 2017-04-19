@@ -37,10 +37,15 @@ class Api::EventsController < ApplicationController
     @events = current_user.events
   end
 
+  def teams
+    @teams = selected_event.teams
+    render 'api/teams/index'
+  end
+
   private
 
   def selected_event
-    Event.find_by(params[:id])
+    Event.find_by(id: params[:id])
   end
 
   def event_params

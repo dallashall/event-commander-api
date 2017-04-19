@@ -1,5 +1,5 @@
 json.session do
-  json.auth_token @auth_token
+  json.auth_token @user.auth_token
   json.user do
     json.username @user.username
     json.email @user.email

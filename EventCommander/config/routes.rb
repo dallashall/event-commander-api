@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get "/team_members/connect/:sut" => "team_members#connect"
     resources :tasks
     resources :details
+    resources :detail_assignments
+    get "/events/:id/teams" => "events#teams"
     post "/team_members_sessions" => "team_members_sessions#create"
     delete "/team_members_sessions" => "team_members_session#destroy"
   end

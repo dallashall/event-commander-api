@@ -4,8 +4,8 @@ class Api::SessionsController < ApplicationController
 
   def create
     @user = User.find_by(email: user_params[:email])
-    if user && user.is_password?(user_params[:password])
-      @auth_token = user.gen_auth_token
+    if @user && @user.is_password?(user_params[:password])
+      @user.gen_auth_token
       render :create
     else
       invalid_login
@@ -13,8 +13,8 @@ class Api::SessionsController < ApplicationController
   end
 
   def destroy
-    user = current_user
-    user.invalidate_token
+    @user = current_user
+    @user.invalidate_token
     head :ok
   end
 

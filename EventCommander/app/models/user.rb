@@ -3,10 +3,12 @@ class User < ApplicationRecord
   validates :username, :email, presence: true, uniqueness: true
   validates :password_digest, presence: true
   validates :password, length: { minimum: 8, allow_nil: true }
+  has_many :events
+  has_many :teams, through: :events
 
   def gen_auth_token
     token = SecureRandom.urlsafe_base64
-    self.update_columns(auth_token: token)
+    self.update_attributes(auth_token: token)
     token
   end
 
