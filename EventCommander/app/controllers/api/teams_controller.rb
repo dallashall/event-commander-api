@@ -11,7 +11,7 @@ class Api::TeamsController < ApplicationController
 
   def destroy
     @team = selected_team
-    if @team
+    if valid_action?
       @team.destroy
       render :show
     else
@@ -21,8 +21,7 @@ class Api::TeamsController < ApplicationController
 
   def update
     @team = selected_team
-    if @team && @team.user.id == current_user.id
-      @team.update_attributes(team_params)
+    if valid_action? && @team.update_attributes(team_params)
       render :show
     else
       render @team.errors.full_messages, status: 401
@@ -31,10 +30,25 @@ class Api::TeamsController < ApplicationController
 
   def show
     @team = selected_team
+    if valid_action?
+      render :show
+    else
+      render json: ['Unauthorized access.'], status: 401
+    end
   end
 
   def index
     @teams = current_user.teams
+  end
+
+  def tasks
+    @team = selected_team
+    if valid_action?
+      @tasks = @team.tasks
+      render 'api/teams/index'
+    else
+      render json: ['Unauthorized access.'], status: 401
+    end
   end
 
   private
@@ -45,5 +59,10 @@ class Api::TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(:event_id, :name)
+  end
+
+  def valid_action?
+    return true if @team && @team.user.id == current_user.id
+    false
   end
 end

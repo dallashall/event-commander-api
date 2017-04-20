@@ -13,7 +13,7 @@ class Api::TasksController < ApplicationController
 
   def destroy
     @task = selected_task
-    if @task
+    if valid_action?
       @task.destroy
       render :show
     else
@@ -23,7 +23,7 @@ class Api::TasksController < ApplicationController
 
   def update
     @task = selected_task
-    if @task && @task.update_attributes(task_params)
+    if valid_action? && @task.update_attributes(task_params)
       render :show
     else
       render json: ["Could not update task"], status: 401
@@ -32,10 +32,21 @@ class Api::TasksController < ApplicationController
 
   def show
     @task = selected_task
+    if valid_action?
+      render :show
+    else
+      render json: ['Unauthorized access.'], status: 401
+    end
   end
 
   def details
+    @task = selected_task
     @details = selected_task.details
+    if valid_action?
+      render 'api/details/index'
+    else
+      render json: ['Unauthorized access.'], status: 401
+    end
   end
 
   private
@@ -46,5 +57,10 @@ class Api::TasksController < ApplicationController
 
   def selected_task
     Task.find_by(id: params[:id])
+  end
+
+  def valid_action?
+    return true if @task && @task.user.id == current_user.id
+    false
   end
 end

@@ -12,7 +12,7 @@ class Api::TeamMembersController < ApplicationController
 
   def destroy
     @team_member = selected_team_member
-    if @team_member
+    if valid_action?
       @team_member.destroy
       render :show
     else
@@ -22,8 +22,7 @@ class Api::TeamMembersController < ApplicationController
 
   def update
     @team_member = selected_team_member
-    if @team_member
-      @team_member.update_attributes(team_member_params)
+    if valid_action? && @team_member.update_attributes(team_member_params)
       render :show
     else
       render json: ["Error updating team member."], status: 401
@@ -48,5 +47,10 @@ class Api::TeamMembersController < ApplicationController
 
   def selected_team_member
     TeamMember.find_by(id: params[:id])
+  end
+
+  def valid_action?
+    return true if @team_member && @team_member.user.id == current_user.id
+    false
   end
 end
