@@ -6,11 +6,21 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_token
-    authenticate_with_http_token do |token, options|
+    authenticate_with_http_token do |token, _options|
       User.find_by(auth_token: token)
     end
   end
-  
+
+  def authenticate_team_member
+    authenticate_with_http_token do |token, _options|
+      TeamMember.find_by(auth_token: token)
+    end
+  end
+
+  def current_team_member
+    @current_team_member ||= authenticate_team_member
+  end
+
   def current_user
     @current_user ||= authenticate_token
   end
