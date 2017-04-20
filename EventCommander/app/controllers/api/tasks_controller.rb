@@ -1,5 +1,7 @@
 # AR Model for task objects
 class Api::TasksController < ApplicationController
+  before_action :require_login!
+
   def create
     @task = Task.new(task_params)
     if @task.save

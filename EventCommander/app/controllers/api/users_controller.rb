@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
 
   def destroy
     user = User.find_by(id: params[:id])
-    if user
+    if user && user.id == current_user.id
       user.destroy
       render json: ["Successfully removed user"]
     else

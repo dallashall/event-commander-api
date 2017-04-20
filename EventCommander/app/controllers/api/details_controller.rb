@@ -1,5 +1,7 @@
 # AR Model for detail object
 class Api::DetailsController < ApplicationController
+  before_action :require_login!
+
   def create
     @detail = Detail.new(detail_params)
     if @detail.save

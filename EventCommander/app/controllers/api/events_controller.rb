@@ -1,5 +1,7 @@
 # AR Model for event object
 class Api::EventsController < ApplicationController
+  before_action :require_login!
+
   def create
     @event = Event.new(event_params)
     if @event.save
@@ -10,7 +12,7 @@ class Api::EventsController < ApplicationController
   end
 
   def destroy
-    @event = selected_event
+    @event = selected_event && @event.user_id == current_user.id
     if @event
       @event.destroy
       render :show
@@ -31,6 +33,11 @@ class Api::EventsController < ApplicationController
 
   def show
     @event = selected_event
+    if @event && @event.user_id == current_user.id
+      render :show
+    else
+      render json: ["Unauthorized access."], status: 401
+    end
   end
 
   def index
@@ -38,8 +45,13 @@ class Api::EventsController < ApplicationController
   end
 
   def teams
-    @teams = selected_event.teams
-    render 'api/teams/index'
+    event = selected_event
+    if event && event.user_id == current_user.id
+      @teams = selected_event.teams
+      render 'api/teams/index'
+    else
+      render json: ["Unauthorized access."], status: 401
+    end
   end
 
   private

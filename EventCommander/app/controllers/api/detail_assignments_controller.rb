@@ -1,4 +1,6 @@
 class Api::DetailAssignmentsController < ApplicationController
+  before_action :require_login!
+
   def create
     @detail_assignment = DetailAssignment.new(detail_assignment_params)
     if @detail_assignment.save
@@ -7,7 +9,7 @@ class Api::DetailAssignmentsController < ApplicationController
       render @detail_assignment.errors.full_messages, status: 401
     end
   end
-  
+
   def update
     @detail_assignment = selected_detail_assignment
     if @detail_assignment && @detail_assignment.update_attributes(detail_assignment_params)
@@ -18,15 +20,15 @@ class Api::DetailAssignmentsController < ApplicationController
       render json: @detail_assignment.errors.full_messages, status: 401
     end
   end
-  
+
   def show
     @detail_assignment = selected_detail_assignment
   end
-  
+
   def index
     @detail_assignments = DetailAssignment.all
   end
-  
+
   def destroy
     @detail_assignment = selected_detail_assignment
     if @detail_assignment
@@ -36,9 +38,9 @@ class Api::DetailAssignmentsController < ApplicationController
       render ['Could not find detail_assignment']
     end
   end
-  
+
   private
-  
+
   def selected_detail_assignment
     DetailAssignment.find_by(params[:id])
   end
