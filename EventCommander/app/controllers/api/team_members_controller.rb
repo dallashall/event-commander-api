@@ -16,7 +16,7 @@ class Api::TeamMembersController < ApplicationController
       @team_member.destroy
       render :show
     else
-      render json: ["Could not find user"], status: 401
+      render json: { errors: ["Could not find user"] }, status: 401
     end
   end
 
@@ -25,7 +25,7 @@ class Api::TeamMembersController < ApplicationController
     if valid_action? && @team_member.update_attributes(team_member_params)
       render :show
     else
-      render json: ["Error updating team member."], status: 401
+      render json: { errors: ["Error updating team member."] }, status: 401
     end
   end
 
@@ -35,7 +35,7 @@ class Api::TeamMembersController < ApplicationController
       @team_member.gen_auth_token
       render json: { token: @team_member.auth_token }
     else
-      render json: ["Could not validate user"], status: 401
+      render json: { errors: ["Could not validate user"] }, status: 401
     end
   end
 

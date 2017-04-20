@@ -34,7 +34,7 @@ class Api::TeamsController < ApplicationController
     if valid_action?
       render :show
     else
-      render json: ['Unauthorized access.'], status: 401
+      render json: { errors: ['Unauthorized access.'] }, status: 401
     end
   end
 
@@ -48,7 +48,7 @@ class Api::TeamsController < ApplicationController
       @tasks = @team.tasks
       render 'api/teams/index'
     else
-      render json: ['Unauthorized access.'], status: 401
+      render json: { errors: ['Unauthorized access.'] }, status: 401
     end
   end
 

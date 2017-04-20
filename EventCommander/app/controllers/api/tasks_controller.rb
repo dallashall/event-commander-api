@@ -17,7 +17,7 @@ class Api::TasksController < ApplicationController
       @task.destroy
       render :show
     else
-      render json: ["Could not find task."], status: 401
+      render json: { errors: ["Could not find task."] }, status: 401
     end
   end
 
@@ -26,7 +26,7 @@ class Api::TasksController < ApplicationController
     if valid_action? && @task.update_attributes(task_params)
       render :show
     else
-      render json: ["Could not update task"], status: 401
+      render json: { errors: ["Could not update task"] }, status: 401
     end
   end
 
@@ -35,7 +35,7 @@ class Api::TasksController < ApplicationController
     if valid_action?
       render :show
     else
-      render json: ['Unauthorized access.'], status: 401
+      render json: { errors: ['Unauthorized access.'] }, status: 401
     end
   end
 
@@ -45,7 +45,7 @@ class Api::TasksController < ApplicationController
     if valid_action?
       render 'api/details/index'
     else
-      render json: ['Unauthorized access.'], status: 401
+      render json: { errors: ['Unauthorized access.'] }, status: 401
     end
   end
 

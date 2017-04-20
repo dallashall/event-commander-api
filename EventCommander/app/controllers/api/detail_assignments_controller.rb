@@ -15,7 +15,7 @@ class Api::DetailAssignmentsController < ApplicationController
     if valid_action? && @detail_assignment.update(detail_assignment_params)
       render :show
     elsif !@detail_assignment
-      render json: ['Could not locate detail_assignment'], status: 400
+      render json: { errors: ['Could not locate detail_assignment'] }, status: 400
     else
       render json: @detail_assignment.errors.full_messages, status: 401
     end
@@ -26,7 +26,7 @@ class Api::DetailAssignmentsController < ApplicationController
     if valid_action?
       render :show
     else
-      render json: ["Unauthorized access."], status: 401
+      render json: { errors: ["Unauthorized access."] }, status: 401
     end
   end
 

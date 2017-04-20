@@ -16,7 +16,7 @@ class Api::DetailsController < ApplicationController
     if valid_action? && @detail.update_attributes(detail_params)
       render :show
     elsif !@detail
-      render json: ['Could not locate detail'], status: 400
+      render json: { errors: ['Could not locate detail'] }, status: 400
     else
       render json: @detail.errors.full_messages, status: 401
     end
@@ -27,7 +27,7 @@ class Api::DetailsController < ApplicationController
     if valid_action?
       render :show
     else
-      render json: ['Unauthorized access'], status: 401
+      render json: { errors: ['Unauthorized access'] }, status: 401
     end
   end
 
@@ -41,7 +41,7 @@ class Api::DetailsController < ApplicationController
       @detail.destroy
       render :show
     else
-      render json: ['Could not find detail'], status: 401
+      render json: { errors: ['Could not find detail'] }, status: 401
     end
   end
 
@@ -51,7 +51,7 @@ class Api::DetailsController < ApplicationController
       @detail_assignments = selected_detail.detail_assignments
       render 'api/detail_assignments/index'
     else
-      render json: ["Unauthorized access."], status: 401
+      render json: { errors: ["Unauthorized access."] }, status: 401
     end
   end
 

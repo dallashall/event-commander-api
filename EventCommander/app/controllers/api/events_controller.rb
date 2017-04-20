@@ -35,7 +35,7 @@ class Api::EventsController < ApplicationController
     if valid_action?
       render :show
     else
-      render json: ["Unauthorized access."], status: 401
+      render json: { errors: ["Unauthorized access."] }, status: 401
     end
   end
 
@@ -49,7 +49,7 @@ class Api::EventsController < ApplicationController
       @teams = selected_event.teams
       render 'api/teams/index'
     else
-      render json: ["Unauthorized access."], status: 401
+      render json: { errors: ["Unauthorized access."] }, status: 401
     end
   end
 

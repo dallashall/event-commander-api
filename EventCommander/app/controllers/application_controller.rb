@@ -2,12 +2,12 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   def require_login!
     return true if authenticate_token
-    render json: { errors: ["Unable to authenticate token."] }, status: 402
+    render json: { errors: ["Unable to authenticate token."] }, status: 401
   end
 
   def require_membership!
     return true if authenticate_team_member
-    render json: { errors: ["Unable to authenticate token."] }, status: 402
+    render json: { errors: ["Unable to authenticate token."] }, status: 401
   end
 
   def authenticate_token

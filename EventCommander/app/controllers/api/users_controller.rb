@@ -16,9 +16,9 @@ class Api::UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     if user && user.id == current_user.id
       user.destroy
-      render json: ["Successfully removed user"]
+      render :show
     else
-      render json: ["Failed to find user."]
+      render json: { errors: ["Failed to find user."] }, status: 400
     end
   end
 end
