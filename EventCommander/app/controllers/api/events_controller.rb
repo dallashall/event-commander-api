@@ -64,7 +64,7 @@ class Api::EventsController < ApplicationController
   end
 
   def valid_action?
-    return true if @team && @team.user.id == current_user.id
+    return true if @event && @event.user.id == current_user.id
     false
   end
 end

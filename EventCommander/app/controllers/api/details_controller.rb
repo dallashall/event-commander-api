@@ -66,7 +66,7 @@ class Api::DetailsController < ApplicationController
   end
 
   def valid_action?
-    return true if @detail && @detail.user.id == current_user.id
+    return true if @detail && @detail.event.user.id == current_user.id
     false
   end
 end
