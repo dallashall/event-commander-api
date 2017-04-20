@@ -3,7 +3,7 @@ class Api::DetailAssignmentsController < ApplicationController
 
   def create
     @detail_assignment = DetailAssignment.new(detail_assignment_params)
-    if @detail_assignment.save
+    if valid_action? && @detail_assignment.save
       render :show
     else
       render @detail_assignment.errors.full_messages, status: 401
@@ -47,7 +47,7 @@ class Api::DetailAssignmentsController < ApplicationController
   private
 
   def selected_detail_assignment
-    DetailAssignment.find_by(params[:id])
+    DetailAssignment.find_by(id: params[:id])
   end
   
   def detail_assignment_params

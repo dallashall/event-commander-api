@@ -4,7 +4,7 @@ class Api::EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    if @event.save
+    if valid_action? && @event.save
       render :show
     else
       render @event.errors.full_messages, status: 401
@@ -12,8 +12,8 @@ class Api::EventsController < ApplicationController
   end
 
   def destroy
-    @event = selected_event && @event.user_id == current_user.id
-    if @event
+    @event = selected_event
+    if valid_action?
       @event.destroy
       render :show
     else
@@ -23,8 +23,7 @@ class Api::EventsController < ApplicationController
 
   def update
     @event = selected_event
-    if @event && @event.user_id == current_user.id
-      @event.update_attributes(event_params)
+    if valid_action? && @event.update_attributes(event_params)
       render :show
     else
       render @event.errors.full_messages, status: 401
@@ -33,7 +32,7 @@ class Api::EventsController < ApplicationController
 
   def show
     @event = selected_event
-    if @event && @event.user_id == current_user.id
+    if valid_action?
       render :show
     else
       render json: ["Unauthorized access."], status: 401
@@ -45,8 +44,8 @@ class Api::EventsController < ApplicationController
   end
 
   def teams
-    event = selected_event
-    if event && event.user_id == current_user.id
+    @event = selected_event
+    if valid_action?
       @teams = selected_event.teams
       render 'api/teams/index'
     else
@@ -62,5 +61,10 @@ class Api::EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:user_id, :title, :event_date)
+  end
+
+  def valid_action?
+    return true if @team && @team.user.id == current_user.id
+    false
   end
 end

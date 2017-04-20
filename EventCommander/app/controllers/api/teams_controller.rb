@@ -1,8 +1,9 @@
 # AR Model for team object
 class Api::TeamsController < ApplicationController
+  before_action :require_login!
   def create
     @team = Team.new(team_params)
-    if @team.save
+    if valid_action? && @team.save
       render :show
     else
       render @team.errors.full_messages, status: 401

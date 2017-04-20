@@ -3,7 +3,7 @@ class Api::TeamMembersController < ApplicationController
 
   def create
     @team_member = TeamMember.new(team_member_params)
-    if @team_member.save
+    if valid_action? && @team_member.save
       render :show
     else
       render @team_member.errors.full_messages, status: 401

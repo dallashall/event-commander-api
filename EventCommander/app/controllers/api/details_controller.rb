@@ -4,7 +4,7 @@ class Api::DetailsController < ApplicationController
 
   def create
     @detail = Detail.new(detail_params)
-    if @detail.save
+    if valid_action? && @detail.save
       render :show
     else
       render @detail.errors.full_messages, status: 401
@@ -58,7 +58,7 @@ class Api::DetailsController < ApplicationController
   private
 
   def selected_detail
-    Detail.find_by(params[:id])
+    Detail.find_by(id: params[:id])
   end
 
   def detail_params

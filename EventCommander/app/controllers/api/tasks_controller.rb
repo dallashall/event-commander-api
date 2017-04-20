@@ -4,7 +4,7 @@ class Api::TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    if @task.save
+    if valid_action? && @task.save
       render :show
     else
       render @task.errors.full_messages, status: 401
