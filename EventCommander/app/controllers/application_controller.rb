@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
     render json: { errors: ["Unable to authenticate token."] }, status: 402
   end
 
+  def require_membership!
+    return true if authenticate_team_member
+    render json: { errors: ["Unable to authenticate token."] }, status: 402
+  end
+
   def authenticate_token
     authenticate_with_http_token do |token, _options|
       User.find_by(auth_token: token)
