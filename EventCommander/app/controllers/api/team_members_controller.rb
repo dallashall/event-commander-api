@@ -1,5 +1,5 @@
 class Api::TeamMembersController < ApplicationController
-  before_action :require_login!
+  before_action :require_login!, except: [:connect]
 
   def create
     @team_member = TeamMember.new(team_member_params)
