@@ -34,6 +34,10 @@ class Api::TasksController < ApplicationController
     @task = selected_task
   end
 
+  def details
+    @details = selected_task.details
+  end
+
   private
 
   def task_params

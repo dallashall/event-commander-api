@@ -2,6 +2,7 @@
 class TeamMember < ApplicationRecord
   validates :email, :name, :team, :single_use_token, presence: true
   belongs_to :team
+  has_one :user, through: :team
   before_validation :gen_single_use_token
 
   def gen_auth_token

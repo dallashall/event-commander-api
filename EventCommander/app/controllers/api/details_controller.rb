@@ -13,7 +13,7 @@ class Api::DetailsController < ApplicationController
 
   def update
     @detail = selected_detail
-    if @detail && @detail.update_attributes(detail_params)
+    if valid_action? && @detail.update_attributes(detail_params)
       render :show
     elsif !@detail
       render json: ['Could not locate detail'], status: 400
@@ -24,6 +24,11 @@ class Api::DetailsController < ApplicationController
 
   def show
     @detail = selected_detail
+    if valid_action?
+      render :show
+    else
+      render json: ['Unauthorized access'], status: 401
+    end
   end
 
   def index
@@ -32,11 +37,21 @@ class Api::DetailsController < ApplicationController
 
   def destroy
     @detail = selected_detail
-    if @detail
+    if valid_action?
       @detail.destroy
       render :show
     else
-      render ['Could not find detail']
+      render json: ['Could not find detail'], status: 401
+    end
+  end
+
+  def assignments
+    @detail = selected_detail
+    if valid_action?
+      @detail_assignments = selected_detail.detail_assignments
+      render 'api/detail_assignments/index'
+    else
+      render json: ["Unauthorized access."], status: 401
     end
   end
 
@@ -48,5 +63,10 @@ class Api::DetailsController < ApplicationController
 
   def detail_params
     params.require(:detail).permit(:task_id, :text)
+  end
+
+  def valid_action?
+    return true if @detail && @detail.user.id == current_user.id
+    false
   end
 end

@@ -2,6 +2,7 @@
 class Task < ApplicationRecord
   validates :name, :event, presence: true
   belongs_to :event
+  has_one :user, through: :event
   has_many :details
   has_many :sibling_tasks, through: :event, source: :tasks
   before_validation :set_initial_order

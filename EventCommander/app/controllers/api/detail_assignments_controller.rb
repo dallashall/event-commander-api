@@ -12,7 +12,7 @@ class Api::DetailAssignmentsController < ApplicationController
 
   def update
     @detail_assignment = selected_detail_assignment
-    if @detail_assignment && @detail_assignment.update_attributes(detail_assignment_params)
+    if valid_action? && @detail_assignment.update(detail_assignment_params)
       render :show
     elsif !@detail_assignment
       render json: ['Could not locate detail_assignment'], status: 400
@@ -23,6 +23,11 @@ class Api::DetailAssignmentsController < ApplicationController
 
   def show
     @detail_assignment = selected_detail_assignment
+    if valid_action?
+      render :show
+    else
+      render json: ["Unauthorized access."], status: 401
+    end
   end
 
   def index
@@ -31,7 +36,7 @@ class Api::DetailAssignmentsController < ApplicationController
 
   def destroy
     @detail_assignment = selected_detail_assignment
-    if @detail_assignment
+    if valid_action?
       @detail_assignment.destroy
       render :show
     else
@@ -47,5 +52,10 @@ class Api::DetailAssignmentsController < ApplicationController
   
   def detail_assignment_params
     params.require(:detail_assignment).permit(:team_id, :detail_id)
+  end
+
+  def valid_action?
+    return true if @detail_assignment && @detail_assignment.user.id == current_user.id
+    false
   end
 end
