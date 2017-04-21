@@ -52,7 +52,7 @@ class Api::TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :order, :event_id)
+    params.require(:task).permit(:name, :order, :event_id, :cue)
   end
 
   def selected_task
