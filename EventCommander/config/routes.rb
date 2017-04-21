@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :tasks
     resources :details
     resources :detail_assignments
+    resources :statuses
     get "/events/:id/teams" => "events#teams"
     get "/teams/:id/tasks" => "teams#tasks"
     get "/tasks/:id/details" => "tasks#details"
