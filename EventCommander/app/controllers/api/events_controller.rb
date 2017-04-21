@@ -53,6 +53,12 @@ class Api::EventsController < ApplicationController
     end
   end
 
+  def activate
+    @event = selected_event
+    @event.create_statuses
+    @event.send_invites
+  end
+
   private
 
   def selected_event

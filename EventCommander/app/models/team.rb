@@ -4,4 +4,5 @@ class Team < ApplicationRecord
   has_one :user, through: :event
   has_many :detail_assignments
   has_many :details, through: :detail_assignments
+  has_many :team_members
 end
