@@ -7,5 +7,6 @@ class CreateStatuses < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_index :statuses, [:team_member_id, :detail_id], unique: true
   end
 end

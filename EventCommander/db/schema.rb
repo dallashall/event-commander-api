@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170420235613) do
     t.integer  "confirmed",      default: 0, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["team_member_id", "detail_id"], name: "index_statuses_on_team_member_id_and_detail_id", unique: true, using: :btree
   end
 
   create_table "tasks", force: :cascade do |t|
