@@ -4,6 +4,7 @@ class CreateTasks < ActiveRecord::Migration[5.0]
       t.string :name, null: false
       t.integer :order, null: false
       t.integer :event_id, null: false
+      t.integer :cue, null: false, default: 0
 
       t.timestamps
     end

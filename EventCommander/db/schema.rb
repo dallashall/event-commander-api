@@ -51,11 +51,12 @@ ActiveRecord::Schema.define(version: 20170420235613) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "order",      null: false
-    t.integer  "event_id",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                   null: false
+    t.integer  "order",                  null: false
+    t.integer  "event_id",               null: false
+    t.integer  "cue",        default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["event_id"], name: "index_tasks_on_event_id", using: :btree
   end
 
