@@ -46,6 +46,7 @@ class StatusesController < ApplicationController
   end
 
   def status_params
-    params.require(:status).permit(:detail_id, :confirmed)
+    data = params.require(:status).permit(:detail_id, :confirmed)
+    data[:team_member_id] = current_team_member.id
   end
 end
