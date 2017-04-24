@@ -55,8 +55,13 @@ class Api::EventsController < ApplicationController
 
   def activate
     @event = selected_event
-    @event.create_statuses
-    @event.send_invites
+    if valid_action?
+      @event.create_statuses
+      @event.send_invites
+      render json: ["Activated!"]
+    else
+      render json: { errors: ["Unauthorized access."] }
+    end
   end
 
   private

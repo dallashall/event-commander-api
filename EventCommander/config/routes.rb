@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :detail_assignments
     resources :statuses
     get "/events/:id/teams" => "events#teams"
+    post "/events/:id/activate" => "events#activate"
     get "/teams/:id/tasks" => "teams#tasks"
     get "/tasks/:id/details" => "tasks#details"
     get "/team_members/connect/:sut" => "team_members#connect"
